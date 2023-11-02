@@ -14,11 +14,13 @@ const User_resolver_1 = __importDefault(require("./resolvers/User.resolver"));
 const Shop_Resolver_1 = __importDefault(require("./resolvers/Shop.Resolver"));
 const Product_Resolver_1 = __importDefault(require("./resolvers/Product.Resolver"));
 const AdminResolver_1 = __importDefault(require("./resolvers/AdminResolver"));
+const Order_resolver_1 = __importDefault(require("./resolvers/Order.resolver"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const cors_1 = __importDefault(require("cors"));
 const jwt_1 = require("./modules/jwt");
 const body_parser_1 = __importDefault(require("body-parser"));
 const main_router_1 = __importDefault(require("./routes/main.router"));
+const Customer_resolver_1 = __importDefault(require("./resolvers/Customer.resolver"));
 async function main() {
     await mongoose_1.default.connect(constants_1.__db_url__);
     const app = (0, express_1.default)();
@@ -44,7 +46,14 @@ async function main() {
     const apolloServer = new apollo_server_express_1.ApolloServer({
         schema: await (0, type_graphql_1.buildSchema)({
             validate: false,
-            resolvers: [User_resolver_1.default, Shop_Resolver_1.default, Product_Resolver_1.default, AdminResolver_1.default],
+            resolvers: [
+                User_resolver_1.default,
+                Shop_Resolver_1.default,
+                Product_Resolver_1.default,
+                AdminResolver_1.default,
+                Order_resolver_1.default,
+                Customer_resolver_1.default,
+            ],
         }),
         context: ({ req, res }) => ({
             user: req.user,

@@ -10,6 +10,7 @@ import UserResolver from "./resolvers/User.resolver";
 import ShopResolver from "./resolvers/Shop.Resolver";
 import ProductResolver from "./resolvers/Product.Resolver";
 import AdminResolver from "./resolvers/AdminResolver";
+import OrderResolver from "./resolvers/Order.resolver";
 import mongoose from "mongoose";
 import cors from "cors";
 import { verifyJWT } from "./modules/jwt";
@@ -17,6 +18,7 @@ import bodyParser from "body-parser";
 import { MyRequest } from "./types";
 import { User } from "./models/User/User";
 import mainRouter from "./routes/main.router";
+import CustomerResolver from "./resolvers/Customer.resolver";
 
 async function main() {
   await mongoose.connect(__db_url__);
@@ -50,7 +52,14 @@ async function main() {
   const apolloServer = new ApolloServer({
     schema: await buildSchema({
       validate: false,
-      resolvers: [UserResolver, ShopResolver, ProductResolver, AdminResolver],
+      resolvers: [
+        UserResolver,
+        ShopResolver,
+        ProductResolver,
+        AdminResolver,
+        OrderResolver,
+        CustomerResolver,
+      ],
     }),
     context: ({ req, res }: { req: MyRequest; res: Response }) => ({
       user: req.user,

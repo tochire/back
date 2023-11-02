@@ -53,8 +53,8 @@ let UserResolver = class UserResolver {
             return {
                 errors: [
                     {
-                        code: 'User.Exists',
-                        msg: 'This email is already in use',
+                        code: "User.Exists",
+                        msg: "This email is already in use",
                     },
                 ],
             };
@@ -73,14 +73,14 @@ let UserResolver = class UserResolver {
             return {
                 errors: [
                     {
-                        code: 'wrong login credentials',
-                        msg: 'wrong login credentials',
+                        code: "wrong login credentials",
+                        msg: "wrong login credentials",
                     },
                 ],
             };
         }
         if (!bcrypt_1.default.compareSync(loginInfo.password, user.password)) {
-            return { errors: [{ msg: 'password is wrong', code: '401' }] };
+            return { errors: [{ msg: "password is wrong", code: "401" }] };
         }
         const token = (0, jwt_1.getJWT)({ id: user.id });
         return { user: user, token: token };
@@ -88,7 +88,7 @@ let UserResolver = class UserResolver {
     //update first and lastname
     async updateUser(user, ctx) {
         if (!ctx.user) {
-            return { errors: [{ msg: 'user not found', code: '404' }] };
+            return { errors: [{ msg: "user not found", code: "404" }] };
         }
         let newUser = await User_1.User.findOne({ _id: ctx.user.id });
         newUser = Object.assign(newUser, user);
@@ -98,11 +98,11 @@ let UserResolver = class UserResolver {
     //update password
     async updatePass(user, ctx) {
         if (!ctx.user) {
-            return { errors: [{ msg: 'user not found', code: '404' }] };
+            return { errors: [{ msg: "user not found", code: "404" }] };
         }
         var newuser = await User_1.User.findOne({ _id: ctx.user.id });
         if (!bcrypt_1.default.compareSync(user.oldpassword, newuser.password)) {
-            return { errors: [{ msg: 'password is wrong', code: '401' }] };
+            return { errors: [{ msg: "password is wrong", code: "401" }] };
         }
         newuser.password = await bcrypt_1.default.hash(user.password, 10);
         await newuser.save();
@@ -117,14 +117,14 @@ let UserResolver = class UserResolver {
 };
 __decorate([
     (0, type_graphql_1.Mutation)(() => UserResponse),
-    __param(0, (0, type_graphql_1.Arg)('user')),
+    __param(0, (0, type_graphql_1.Arg)("user")),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [RegisterInput_1.RegisterUserInput]),
     __metadata("design:returntype", Promise)
 ], UserResolver.prototype, "register", null);
 __decorate([
     (0, type_graphql_1.Mutation)(() => UserResponse),
-    __param(0, (0, type_graphql_1.Arg)('user')),
+    __param(0, (0, type_graphql_1.Arg)("user")),
     __param(1, (0, type_graphql_1.Ctx)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [LoginInput_1.default, Object]),
@@ -132,7 +132,7 @@ __decorate([
 ], UserResolver.prototype, "login", null);
 __decorate([
     (0, type_graphql_1.Mutation)(() => UserResponse),
-    __param(0, (0, type_graphql_1.Arg)('user')),
+    __param(0, (0, type_graphql_1.Arg)("user")),
     __param(1, (0, type_graphql_1.Ctx)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [UpdateUserInput_1.default, Object]),
@@ -140,7 +140,7 @@ __decorate([
 ], UserResolver.prototype, "updateUser", null);
 __decorate([
     (0, type_graphql_1.Mutation)(() => UserResponse),
-    __param(0, (0, type_graphql_1.Arg)('user')),
+    __param(0, (0, type_graphql_1.Arg)("user")),
     __param(1, (0, type_graphql_1.Ctx)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [UpdateUserPass_1.default, Object]),
